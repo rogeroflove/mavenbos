@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="qp" extends="needlogin">
+		<!-- 业务通知单受理 -->
+		<action name="noticebill_*" class="noticeBillAction" method="{1}">
+			<result name="saveSUCCESS">/WEB-INF/pages/qupai/noticebill_add.jsp</result>
+		</action>
+		
+		<!-- 工作单管理 -->
+		<action name="workordermanage_*" class="workOrderManageAction" method="{1}">
+			<!-- 保存 -->
+			<result name="saveOrUpdateSUCCESS" type="json">
+				<param name="root">map</param>
+			</result>
+			<!-- 分页查询 -->
+			<result name="pageQuerySUCCESS" type="json">
+				<param name="root">pageResponseBean</param>
+				<param name="includeProperties">
+					total,
+					rows\[\d+\]\.id,
+					rows\[\d+\]\.arrivecity,
+					rows\[\d+\]\.product,
+					rows\[\d+\]\.num,
+					rows\[\d+\]\.weight,
+					rows\[\d+\]\.floadreqr
+				</param>
+			</result>
+			<!-- 工作单审核列表 -->
+			<result name="listSUCCESS">/WEB-INF/pages/zhongzhuan/check.jsp</result>
+			<!-- 审批工作单，启动流程 -->
+			<result name="checkSUCCESS" type="redirectAction">workordermanage_list</result>
+		</action>
+	</package>
+</struts>
